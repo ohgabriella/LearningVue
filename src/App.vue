@@ -2,7 +2,7 @@
   <div id="app">
     <h1>Formulário Desafio</h1>
     <div class="conteudo">
-      <form class="painel">
+      <form class="painel" v-if="!enviado">
         <div class="cabecalho">Formulário</div>
         <!-- Exercicio 01 -->
         <!-- Criar uma formulário de registro -->
@@ -10,21 +10,18 @@
         <!-- Email -->
         <!-- Senha -->
         <!-- Armazenar Dados? (Sim/Não) -->
-        <Rotulo nome="Nome completo">
-          <input type="text" v-model="nomeCompleto" />
-        </Rotulo>
+        
+        <NomeCompleto v-model="nomeCompleto"></NomeCompleto>
+
         <Rotulo nome="E-mail">
           <input type="text" v-model="email" />
         </Rotulo>
         <Rotulo nome="Senha">
           <input type="password" v-model="senha" />
         </Rotulo>
-        <Rotulo nome="Armazenar dados?">
+        <Rotulo nome="Armazenar dados">
           <span>
-            <input type="radio" value="sim" v-model="dado" />Sim
-          </span>
-          <span>
-            <input type="radio" value="nao" v-model="dado" />Não
+            <input class="mr-4" type="checkbox" v-model="salvo" @click="!salvo" />Sim
           </span>
         </Rotulo>
         <button @click.prevent="salvar">Enviar</button>
@@ -33,10 +30,10 @@
       <!-- Exercicio 02 -->
       <!-- Só mostrar o fomulário de não tiver sido submetido -->
       <!-- Mostrar a área de Resultado apenas quando o formulário for submetido -->
-      <div class="painel">
+      <div class="painel" v-else>
         <div class="cabecalho">Resultado</div>
         <Rotulo nome="Nome completo">
-          <span>{{ nomeCompleto }}</span>
+          <span>{{ nomeCompleto.nome }} {{ nomeCompleto.sobrenome }}</span>
         </Rotulo>
         <Rotulo nome="E-mail">
           <span>{{ email }}</span>
@@ -45,7 +42,7 @@
           <span>{{ senha }}</span>
         </Rotulo>
         <Rotulo nome="Armazenar dados?">
-          <span>{{ dado }} - salvo = {{ salvo }}</span>
+          <span>{{ salvo }}</span>
         </Rotulo>
       </div>
 
@@ -58,28 +55,34 @@
 
 <script>
 import Rotulo from "./components/Rotulo.vue";
+import NomeCompleto from "./components/NomeCompleto.vue";
 
 export default {
   name: "app",
-  components: { Rotulo },
+  components: { Rotulo, NomeCompleto },
   data() {
     return {
-      nomeCompleto: "",
+      nomeCompleto: {
+        nome: "",
+        sobrenome: ""
+      },
       email: "",
       senha: "",
-	  dado: "sim",
-	  salvo: false
+      salvo: false,
+      enviado: false
     };
   },
   methods: {
-    salvar() { return this.salvo = true; }
+    salvar() {
+      return (this.enviado = true);
+    }
   }
 };
 </script>
 
 <style>
 body {
-  background-color: #ececec;
+  background-color: cadetblue;
 }
 
 #app {
@@ -108,7 +111,7 @@ body {
 
 .painel .cabecalho {
   width: 100%;
-  background-color: #ddd;
+  background-color: darksalmon;
   padding: 10px 0px;
   border-radius: 5px;
   font-size: 1.4rem;
@@ -118,10 +121,10 @@ body {
   float: right;
   margin: 10px 0px;
   padding: 10px 20px;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   border-radius: 5px;
-  color: #fff;
-  background-color: #2196f3;
+  background-color: darksalmon;
+  border-color: darksalmon;
 }
 
 #app h1 {
@@ -131,6 +134,6 @@ body {
 }
 
 .mr-4 {
-  margin-right: 40px;
+  margin-right: 20px;
 }
 </style>
