@@ -4,9 +4,15 @@
     <hr />
     <!-- Exercício -->
     <!-- Escreva uma diretiva que funcione com o v-on (escute eventos) -->
-    <button
-      v-quando:click.atrasar="{cor: 'green', text: 'Gabriella', texto}"
-    >Vou mudar de cor</button>
+    <button v-quando:atrasar="{cor: 'green', text: 'Gabriella', texto}">Vou mudar de cor</button>
+
+    <button v-quando:click="texto">Clique aqui</button>
+
+    <button v-quando:click="mensagem">{{text}}</button>
+
+    <p v-quando:mouseenter="mouseEnter"
+	v-quando:mouseleave="mouseLeave"
+	>Teste mouse event</p>
 
     <p></p>
   </div>
@@ -17,31 +23,44 @@ export default {
   directives: {
     quando: {
       bind(el, binding, vnode) {
-        const mudarTexto = texto => {
-          if (binding.arg === "click") {
-            binding.value.text = texto;
-            console.log(binding.value.text);
-          }
-        };
+        const tipo = binding.arg;
+        const fn = binding.value;
+        el.addEventListener(tipo, fn);
 
+        // const mudarTexto = texto => {
+        //   if (binding.arg === "click") {
+		// 	binding.value.text = texto;
+		// 	console.log(binding.value.text);
+          
+        //   }
+		// };
+		
         let atraso = 0;
         if (binding.modifiers["atrasar"]) atraso = 3000;
 
         setTimeout(() => {
-		  el.style.backgroundColor = binding.value.cor;
+          el.style.backgroundColor = binding.value.cor;
         }, atraso);
       }
     }
   },
   data() {
     return {
-      cor: "lightblue",
-      text: ""
+      text: "Gabriella"
     };
   },
   methods: {
     texto() {
       alert("Clicou!!");
+    },
+    mouseEnter() {
+      alert("Isso ae!!");
+	},
+	mouseLeave(){
+		console.log('O mouse foi deixado')
+	},
+    mensagem() {
+      this.text = "Clicado";
     }
   }
 };
