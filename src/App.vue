@@ -10,9 +10,7 @@
 
     <button v-quando:click="mensagem">{{text}}</button>
 
-    <p v-quando:mouseenter="mouseEnter"
-	v-quando:mouseleave="mouseLeave"
-	>Teste mouse event</p>
+    <p v-quando:mouseenter="mouseEnter" v-quando:mouseleave="mouseLeave">Teste de mouse event</p>
 
     <p></p>
   </div>
@@ -29,12 +27,12 @@ export default {
 
         // const mudarTexto = texto => {
         //   if (binding.arg === "click") {
-		// 	binding.value.text = texto;
-		// 	console.log(binding.value.text);
-          
+        // 	binding.value.text = texto;
+        // 	console.log(binding.value.text);
+
         //   }
-		// };
-		
+        // };
+
         let atraso = 0;
         if (binding.modifiers["atrasar"]) atraso = 3000;
 
@@ -55,10 +53,10 @@ export default {
     },
     mouseEnter() {
       alert("Isso ae!!");
-	},
-	mouseLeave(){
-		console.log('O mouse foi deixado')
-	},
+    },
+    mouseLeave() {
+      console.log("O mouse foi deixado");
+    },
     mensagem() {
       this.text = "Clicado";
     }
@@ -78,11 +76,16 @@ export default {
 }
 
 button {
-  margin: 10px 0px;
+  width: 350px;
+  margin: 10px auto;
   padding: 10px 20px;
   font-size: 1.4rem;
-  border-radius: 5px;
+  border-radius: 10px;
   color: #fff;
-  background-color: #2196f3;
+  background-color: lightseagreen;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 </style>
